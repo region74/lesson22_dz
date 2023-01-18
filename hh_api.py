@@ -2,8 +2,6 @@ import requests
 import pprint
 import json
 
-text = 'Python'
-
 
 def get_info(text):
     DOMAIN = 'https://api.hh.ru/'
@@ -12,31 +10,22 @@ def get_info(text):
     gorod = '1384'
     params = {
         'text': found_vac,
-        'experience': 'noExperience',
+        # 'experience': 'noExperience',
         'area': gorod
     }
 
     result = requests.get(url, params=params).json()
-    pprint.pprint(result)
-    count_pages = result['pages']
-    count_vac = len(result['items'])
-    items = result['items']
-    employers_city = []
-    sites = []
-    employers = []
-    skills = []
+    offers_data = []
+
     for item in result['items']:
         city = item['area']['name']
-        emp = item['employer']['name']
-        name=item['name']
+        employer = item['employer']['name']
+        position = item['name']
         link = item['alternate_url']
         try:
-            sal = item['salary']['from']
+            salary = item['salary']['from']
         except Exception:
-            sal = 'Не указана'
-        employers_city.append(f'Город: {city} Фирма: {emp} ' f'Должность: {name} Зарплата от: {sal} ' f'Ссылка вакансии: {link}')
-    return employers_city
-
-
-result = get_info(text)
-pprint.pprint(result)
+            salary = 'Не указана'
+        offers_data.append(
+            f'Город: {city} Фирма: {employer} ' f'Должность: {position} Зарплата от: {salary} ' f'Ссылка вакансии: {link}')
+    return offers_data
