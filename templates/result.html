@@ -221,13 +221,13 @@
                 <!--              <button class="btn btn-primary w-100">send</button>-->
                 <!--            </div>-->
                 {% if data%}
-                <ul>
+                <ul class="list-group">
                     {% for item in data%}
-                    <li>{{item}}</li>
+                    <li class="list-group-item">{{item}}</li>
                     {% endfor %}
                 </ul>
                 {% else%}
-                данных нет
+                Данных пока нет, заполните форму поиска!
                 {% endif %}
 
                 </form>
